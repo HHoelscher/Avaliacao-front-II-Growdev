@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- CSS BootStrap -->
+      <link rel="stylesheet" href="/assets/frameworks/css/bootstrap.min.css" />
+      <!-- Icones BS -->
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+      />
+      <!-- Meu CSS -->
+      <link rel="stylesheet" href="/css/style.css" />
+      <title>Meus Recados</title>
+   </head>
+   <body>
+      <main class="container-fluid bgDefault vh-100 vw-100 overflow-auto">
+         <div id="contentContainer" class="container vh-100">
+            <div class="d-flex justify-content-between">
+               <h1 class="mt-4 fw-bold text-black">
+                  Meus recados
+                  <button
+                     class="btn btn-primary"
+                     data-bs-toggle="modal"
+                     data-bs-target="#createMessage"
+                  >
+                     <i class="bi bi-stickies-fill"></i>
+                  </button>
+               </h1>
+               <button
+                  id="exit"
+                  class="btn fw-bold text-black bg-danger mt-4"
+                  onclick="logOut()"
+               >
+                  Sair <i class="bi bi-door-open-fill"></i>
+               </button>
+            </div>
+
+            <hr />
+
+            <div id="messageCard" class="row g-3">
+               <!-- <div class="col-4">
+                  <div class="card">
+                     <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">
+                           Lorem ipsum dolor sit amet consectetur adipisicing
+                           voluptatum illum? Dolores, vero magnam!
+                        </p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                     </div>
+                  </div>
+               </div> -->
+            </div>
+         </div>
+      </main>
+
+      <button
+         class="btn btn-primary button position-fixed bottom-0 end-0 mx-5 mb-5"
+         data-bs-toggle="modal"
+         data-bs-target="#createMessage"
+      >
+         <span>Adicionar novo recado <i class="bi bi-pin-angle-fill"></i></span>
+      </button>
+
+      <!-- modal criar mensagem -->
+      <div id="createMessage" class="modal" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Registre seu novo recado</h5>
+                  <button
+                     type="button"
+                     class="btn-close"
+                     data-bs-dismiss="modal"
+                     aria-label="Close"
+                  ></button>
+               </div>
+               <form id="formMessage" class="needs-validation" novalidate>
+                  <div class="modal-body">
+                     <div class="mb-3">
+                        <input
+                           type="text"
+                           id="messageId"
+                           style="display: none"
+                        />
+
+                        <label
+                           for="message"
+                           id="labelMessage"
+                           class="form-label mt-3"
+                           >Título do Recado</label
+                        >
+                        <input
+                           type="text"
+                           name="message"
+                           id="message"
+                           class="form-control"
+                           placeholder="Defina um título"
+                           required
+                           minlength="5"
+                        />
+                        <div class="invalid-feedback">
+                           Defina um título com 5 ou mais caracteres.
+                        </div>
+
+                        <label
+                           for="description"
+                           id="labelDescription"
+                           class="form-label mt-3"
+                           >Descrição</label
+                        >
+                        <input
+                           type="text"
+                           name="description"
+                           id="description"
+                           class="form-control"
+                           minlength="3"
+                           placeholder="Informe uma descrição"
+                        />
+                     </div>
+                  </div>
+               </form>
+               <div class="modal-footer">
+                  <button
+                     type="button"
+                     class="btn btn-secondary"
+                     data-bs-dismiss="modal"
+                  >
+                     Fechar
+                  </button>
+                  <button
+                     class="btn btn-primary"
+                     type="submit"
+                     id="saveMessage"
+                     onclick="createMessage(event)"
+                  >
+                     Salvar
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div
+         id="notify"
+         class="toast-container position-fixed bottom-0 start-0 p-3"
+      ></div>
+
+      <!-- Modal editar mensagem -->
+      <div id="editMessage" class="modal" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Edite seu recado</h5>
+                  <button
+                     type="button"
+                     class="btn-close"
+                     data-bs-dismiss="modal"
+                     aria-label="Close"
+                  ></button>
+               </div>
+               <form id="formEdit" class="needs-validation" novalidate>
+                  <div class="modal-body">
+                     <div class="mb-3">
+                        <input
+                           type="text"
+                           id="messageId"
+                           style="display: none"
+                        />
+
+                        <label for="titleEdit" class="form-label mt-3"
+                           >Novo título</label
+                        >
+                        <input
+                           type="text"
+                           name="titleEdit"
+                           id="titleEdit"
+                           class="form-control"
+                           placeholder="Defina um título"
+                           required
+                           minlength="5"
+                        />
+                        <div class="invalid-feedback">
+                           Defina um título com 5 ou mais caracteres.
+                        </div>
+
+                        <label for="descriptionEdit" class="form-label mt-3"
+                           >Nova descrição</label
+                        >
+                        <input
+                           type="text"
+                           name="descriptionEdit"
+                           id="descriptionEdit"
+                           class="form-control"
+                           minlength="3"
+                           placeholder="Informe uma descrição"
+                        />
+                     </div>
+                  </div>
+               </form>
+               <div class="modal-footer">
+                  <button
+                     type="button"
+                     class="btn btn-secondary"
+                     data-bs-dismiss="modal"
+                  >
+                     Fechar
+                  </button>
+                  <button
+                     type="submit"
+                     class="btn bg-success"
+                     onclick="update(event)"
+                  >
+                     Salvar
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- JS BootStrap -->
+      <script src="/assets/frameworks/js/bootstrap.bundle.min.js"></script>
+      <!-- Meu JS -->
+      <script src="/js/messages.js"></script>
+   </body>
+</html>
